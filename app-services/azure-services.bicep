@@ -3,11 +3,13 @@
 param dnsPrefix string = resourceGroup().name // name is obtained from env
 
 @description('The unique name for the AKS cluster, such as myAKSCluster.')
-param clusterName string = 'devsecops-aks'
+param clusterName string = 'aks-containers-devsecops'
 
 @description('The unique name for the Azure Key Vault.')
-param akvName string = 'akv-${uniqueString(resourceGroup().id)}'
+param akvName string = 'akv-containers-devsecops'
 
+@description('The unique name for the Azure Container Registry.')
+param acrName string = 'acrcontainersdevsecops'
 
 // Optional params
 @description('The region to deploy the cluster. By default this will use the same region as the resource group.')
@@ -23,7 +25,7 @@ param agentVMSize string = 'Standard_DS2_v2'
 
 // create azure container registry
 resource acr 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' = {
-  name: 'acr${uniqueString(resourceGroup().id)}'
+  name: acrName
   location: location
   sku: {
     name: 'Standard'
